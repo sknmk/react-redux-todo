@@ -2,6 +2,8 @@
 
 ![plot](./doc/ss.jpg)
 
+Class yerine method componentler kullanıldı. Giriş ekranı eklendi, (sunucuyla konuşmaya çalışıyor, konuşursa redux token, expireDate ve user detail'ları kaydediyor.) TodoItem'lar reduxa kaydoluyorve oradan işlem görüyor. Redux local storage içerisinde sürekli hatırlanıyor.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

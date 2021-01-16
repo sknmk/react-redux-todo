@@ -1,40 +1,73 @@
 import React from 'react'
-import TextField from "@material-ui/core/TextField"
-import Box from "@material-ui/core/Box"
+import {connect} from 'react-redux'
+import {addTodo} from '../store/actions'
+import {makeStyles} from '@material-ui/core/styles'
+import Box from '@material-ui/core/Box'
+import Paper from '@material-ui/core/Paper'
+import InputBase from '@material-ui/core/InputBase'
+import Divider from '@material-ui/core/Divider'
+import IconButton from '@material-ui/core/IconButton'
+import SendOutlinedIcon from '@material-ui/icons/SendOutlined'
+import CloseIcon from '@material-ui/icons/Close'
+import PropTypes from 'prop-types'
 
-class NewTodo extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            input: ''
+const NewTodo = ({ addTodo }) => {
+    const classes = useStyles()
+    const [input, setInput] = React.useState('')
+    const submit = () => {
+        if (input.length < 2) {
+            return false
         }
-        this.handleInput = this.handleInput.bind(this)
-        this.handleState = this.handleState.bind(this)
+        addTodo(input)
+        handleReset()
     }
-
-    handleInput(e) {
+    const handleInput = (e) => {
         if (e.key === 'Enter') {
-            this.props.newItem(e.target.value)
-            this.setState({
-                input: ''
-            })
+            submit()
         }
     }
-
-    handleState(e) {
-        this.setState({
-            input: e.target.value
-        })
+    const handleReset = () => {
+        setInput('')
     }
 
-    render() {
-        return (
-            <Box pb={2}>
-                <TextField fullWidth label="Yeni bir iş girin." variant="outlined" value={this.state.input}
-                           onChange={this.handleState} onKeyDown={this.handleInput}/>
-            </Box>
-        )
-    }
+    return (
+        <Box mb={2}>
+            <Paper className={classes.root} elevation={3}>
+                <InputBase className={classes.input} placeholder='Yeni bir iş girin.' value={input}
+                           onChange={e => setInput(e.target.value)} onKeyDown={handleInput} fullWidth={true}/>
+                <IconButton className={classes.iconButton} onClick={handleReset}>
+                    <CloseIcon/>
+                </IconButton>
+                <Divider className={classes.divider} orientation='vertical'/>
+                <IconButton className={classes.iconButton} onClick={submit}>
+                    <SendOutlinedIcon/>
+                </IconButton>
+            </Paper>
+        </Box>
+    )
 }
 
-export default NewTodo
+NewTodo.propTypes = {
+    addTodo: PropTypes.any
+}
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        padding: '2px 4px',
+        display: 'flex',
+        alignItems: 'center',
+    },
+    input: {
+        marginLeft: theme.spacing(1),
+        flex: 1,
+    },
+    iconButton: {
+        padding: 10,
+    },
+    divider: {
+        height: 28,
+        margin: 4,
+    },
+}))
+
+export default connect(null, {addTodo})(NewTodo)

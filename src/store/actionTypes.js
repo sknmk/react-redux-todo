@@ -1,0 +1,5 @@
+export const SESSION = 'SESSION'
+export const SESSION_RESET = 'SESSION_RESET'
+export const ADD_TODO = 'ADD_TODO'
+export const RESET_TODO = 'RESET_TODO'
+export const TOGGLE_TODO = 'TOGGLE_TODO'
